@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas Application</title>
+</head>
+<style>
+  body {
+    padding: 0;
+    margin: 0;
+    background-image: linear-gradient(to right, rgb(51, 204, 204), rgb(102, 255, 102));
+  }
+
+  div#root {
+    padding: 0;
+  }
+
+  img {
+    display: none;
+  }
+
+  canvas {
+    background-color: black;
+    display: block;
+    max-width: 100vw;
+    max-height: 95vh;
+    cursor: none;
+     /* crosshair; */
+  }
+</style>
+
+<body>
+  <img src="./static/assets/sprite_ghost_left.png" class="player-sprite">
+  <img src="./static/assets/sprite_ghost_right.png" class="player-sprite">
+  <div id="app"></div>
+</body>
+<script type="module" src="/static/js/index.js"></script>
+
+</html>
