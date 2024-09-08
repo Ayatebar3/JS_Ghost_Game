@@ -10,7 +10,8 @@ import {
   RegularPolygon,
   Damage,
   Health,
-  Score
+  Score,
+  Vector2D
 } from './components.js'
 
 /**
@@ -22,19 +23,32 @@ import {
 export const Systems = (canvas, entityManager) => {
   const context = canvas.getContext('2d');
   const bulletSpeed = 50;
-  const enemySpeed = 5;
+  const enemySpeed = 7;
   const enemyRadius = 50;
-  const enemySpawnTime = 1000;
+  const enemySpawnTime = 1500;
   const enemyColors = [
     "",
-    "maroon",
+    "red",
     "orange",
+    "yellow",
     "green",
     "cyan",
+    "blue",
     "indigo",
-    "magenta",
     "purple"
   ];
+  const getEnemySpawnCoordinates = (index) => {
+    switch(index) {
+      case 0:
+        return [100, 100]
+      case 1:
+        return [100, canvas.height - 100]
+      case 2: 
+        return [canvas.width - 100 , 100]
+      case 3:
+        return [canvas.width - 100 , canvas.height - 100]
+    }
+  }
   
   let then = Date.now();
 
@@ -43,7 +57,8 @@ export const Systems = (canvas, entityManager) => {
     if (now - then > enemySpawnTime) {
       const random = Math.floor(Math.random() * 7) + 3;
       const enemy = entityManager.addEntity('enemy');
-      enemy.setComponent(new Position(random * 75, random * 75));
+      const enemyPosition = getEnemySpawnCoordinates(random % 4)
+      enemy.setComponent(new Position(enemyPosition[0], enemyPosition[1]));
       enemy.setComponent(new Velocity(0, 0));
       enemy.setComponent(new RegularPolygon(enemyRadius, random));
       enemy.setComponent(new Score(random));
@@ -206,14 +221,15 @@ export const Systems = (canvas, entityManager) => {
         const enemyPosition = enemy.getComponent(Position.name);
         const enemyDamage = enemy.getComponent(Damage.name);
         if (Vector2Math.distSquared(
-          enemyPosition,
-          playerPosition
-        ) < enemyRadius * enemyRadius) {
+          Vector2Math.sum(enemyPosition, new Vector2D(enemyRadius * 0.5, enemyRadius * 0.5)),
+          Vector2Math.sum(playerPosition, new Vector2D(sprite.width * 0.5, sprite.height * 0.5)),
+        ) < (enemyRadius * enemyRadius) - enemyRadius) {
           enemy.destroy();
           playerHealth.value -= enemyDamage.value
-          // if (playerHealth.value <= 0) {
-          //   // TODO: End game Scene
-          // }
+          if (playerHealth.value <= 0) {
+            alert('You died :P');
+            location.reload();
+          }
         }
       }
     }
@@ -401,7 +417,7 @@ export const Systems = (canvas, entityManager) => {
   }
 
   return [
-    // EnemySpawner,
+    EnemySpawner,
     EnemyMovement,
     UserInputs,
     Kinematics,

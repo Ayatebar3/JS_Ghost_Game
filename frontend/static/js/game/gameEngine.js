@@ -199,23 +199,25 @@ export class GameEngine {
       this.#_canvas.addEventListener("keydown", (e) => {
         if (e.key === ' ') {
           e.preventDefault();
-          const enemy = this.#_entityManager.addEntity('enemy');
-          const vertexCount = Math.floor(Math.random() * 7) + 3;
-          const x_rand = Math.floor(Math.random() * this.#_canvas.width - 2) + 1;
-          const y_rand = Math.floor(Math.random() * this.#_canvas.height - 2) + 1;
-          enemy.setComponent(new Position(x_rand, y_rand));
-          enemy.setComponent(new Velocity(0, 0));
-          enemy.setComponent(new RegularPolygon(50, vertexCount));
-          enemy.setComponent(new Score(vertexCount));
-          enemy.setComponent(new Health(vertexCount));
-          enemy.setComponent(new Damage(vertexCount));
+          for (let i = 3; i < 10; i++) {
+            const enemy = this.#_entityManager.addEntity('enemy');
+            const vertexCount = i;
+            const x_rand = Math.floor(Math.random() * this.#_canvas.width - 2) + 1;
+            const y_rand = Math.floor(Math.random() * this.#_canvas.height - 2) + 1;
+            enemy.setComponent(new Position(x_rand, y_rand));
+            enemy.setComponent(new Velocity(0, 0));
+            enemy.setComponent(new RegularPolygon(50, vertexCount));
+            enemy.setComponent(new Score(vertexCount));
+            enemy.setComponent(new Health(vertexCount));
+            enemy.setComponent(new Damage(vertexCount));
+          }
         }
       })
     }
 
     addPlayerMovementInput();
     addPlayerMouseInput();
-    addManualEnemyCreator();
+    // addManualEnemyCreator();
   }
 
   run = () => {
