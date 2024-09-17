@@ -195,6 +195,7 @@ export class GameEngine {
       )
     }
  
+    // For Debugging Purposes
     const addManualEnemyCreator = () => {
       this.#_canvas.addEventListener("keydown", (e) => {
         if (e.key === ' ') {

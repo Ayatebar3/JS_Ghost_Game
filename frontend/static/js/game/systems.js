@@ -43,7 +43,7 @@ export const Systems = (canvas, entityManager) => {
         return [100, 100]
       case 1:
         return [100, canvas.height - 100]
-      case 2: 
+      case 2:
         return [canvas.width - 100 , 100]
       case 3:
         return [canvas.width - 100 , canvas.height - 100]
